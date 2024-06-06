@@ -34,21 +34,23 @@ void load_network_Devices (FILE *f, ND *netDev){
         netDev[Pos].LLD_COUNT = LLDC;
         netDev[Pos].LLD_ID = new uint16_t[LLDC]; //con el lower level device count asigno memmoria a mi vector de ID para los disp. inferiores en mi estructura
         fread(&Header, sizeof(uint16_t), 1, f);
-        DTNH = (Header>>11)& 0x2;
+        DTNH = (Header>>11)& 0x3;
         DTNL = (Header>>3)& 0x1;
-        DeviceType = DTNH + DTNL;
+        DeviceType = (DTNH << 1) + DTNL;
         INFO = (Header>>4) & 0XFF;
+        netDev[Pos].DeviceType = DeviceType;
         if(DeviceType == 0 || DeviceType == 3){
             netDev[Pos].DT.CPU_OR_CONCENTRATOR = DeviceType;
         } else if(DeviceType==1){ // Si Device Typer es un 1 entonces es un sensor
-            INFO = (INFO<<2)>>6;
+            INFO = (INFO << 2) >> 6;
             netDev[Pos].DT.SENSOR.TYPE = INFO;
-        }else if(DeviceType==2){ 
-            INFO = (INFO>>2) & 0x1;
+        }else if(DeviceType == 2){ 
+            INFO = (INFO >> 2) & 0x1;
             netDev[Pos].DT.ACTUATOR.TYPE = INFO;
         }
         fread(&Header, sizeof(uint16_t), 1, f);
         ULDID = (Header>>3) & 0x3FF;
+        netDev[Pos].ULD_ID = ULDID;
         for (int i = 0; i < LLDC; i++){
             fread(&netDev[Pos].LLD_ID[i], sizeof(uint16_t), 1, f);    
         }
@@ -99,7 +101,7 @@ void ID_Connection_Sequence(FILE *f, ND *netDev) {
     Pos = busqueda_lineal(f, netDev, ID);
     for (int i = 0; i <= vSize; i++) {
         v[i] = netDev[Pos].ID;
-        Pos = busqueda_lineal(f, R, R[Pos].ULD_ID);
+        Pos = busqueda_lineal(f, netDev, netDev[Pos].ULD_ID);
     }
     printf("\n");
 
