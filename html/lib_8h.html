@@ -118,6 +118,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ab18993b396e5a4093a05a09b1e0b0d76" id="r_ab18993b396e5a4093a05a09b1e0b0d76"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab18993b396e5a4093a05a09b1e0b0d76">ID_Connection_Sequence</a> (FILE *f, <a class="el" href="#af420078b2c324b5d0957818465e33137">ND</a> *netDev)</td></tr>
 <tr class="memdesc:ab18993b396e5a4093a05a09b1e0b0d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encuentra la secuencia de conexiones de un ID ingresado por el usuario.  <br /></td></tr>
 <tr class="separator:ab18993b396e5a4093a05a09b1e0b0d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30f635c4c1dc42c8d1b67ae37dcb908f" id="r_a30f635c4c1dc42c8d1b67ae37dcb908f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a30f635c4c1dc42c8d1b67ae37dcb908f">printDeviceCount</a> (FILE *f, <a class="el" href="#af420078b2c324b5d0957818465e33137">ND</a> *netDev)</td></tr>
+<tr class="memdesc:a30f635c4c1dc42c8d1b67ae37dcb908f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Muestra la contidad de dispositivos conectados en la red.  <br /></td></tr>
+<tr class="separator:a30f635c4c1dc42c8d1b67ae37dcb908f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c19d82b817917864afe07911638c199" id="r_a9c19d82b817917864afe07911638c199"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9c19d82b817917864afe07911638c199">menu</a> (FILE *f, <a class="el" href="#af420078b2c324b5d0957818465e33137">ND</a> *netDev)</td></tr>
+<tr class="memdesc:a9c19d82b817917864afe07911638c199"><td class="mdescLeft">&#160;</td><td class="mdescRight">Es un menú para que el usuario interactue y busque lo que desea ver.  <br /></td></tr>
+<tr class="separator:a9c19d82b817917864afe07911638c199"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="af420078b2c324b5d0957818465e33137" name="af420078b2c324b5d0957818465e33137"></a>
@@ -251,6 +257,68 @@ Functions</h2></td></tr>
 
 <p>LLeno la estructura <a class="el" href="structnetwork_devices.html">networkDevices</a> con los datos extraidos del archivo. </p>
 <p>Esta función lee los datos del archivo y los carga en la estructura donde corresponde para su posterior lectura. Tambien asigna memoria dinámicamente para los IDs de los dispositivos de nivel inferior (LLD_ID). </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>Manipulador del archivo archivo network_structure.dat. </td></tr>
+    <tr><td class="paramname">netDev</td><td>Puntero a los registros cargados en la estructura <a class="el" href="structnetwork_devices.html">networkDevices</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9c19d82b817917864afe07911638c199" name="a9c19d82b817917864afe07911638c199"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c19d82b817917864afe07911638c199">&#9670;&#160;</a></span>menu()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void menu </td>
+          <td>(</td>
+          <td class="paramtype">FILE *</td>          <td class="paramname"><span class="paramname"><em>f</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#af420078b2c324b5d0957818465e33137">ND</a> *</td>          <td class="paramname"><span class="paramname"><em>netDev</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Es un menú para que el usuario interactue y busque lo que desea ver. </p>
+<p>Con este procedimiento el usuairo puede elegir entre buscar una secuencia de IDs o saber la cantidad de dispositivos de una misma especie conectados en la red.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>Manipulador del archivo archivo network_structure.dat. </td></tr>
+    <tr><td class="paramname">netDev</td><td>Puntero a los registros cargados en la estructura <a class="el" href="structnetwork_devices.html">networkDevices</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a30f635c4c1dc42c8d1b67ae37dcb908f" name="a30f635c4c1dc42c8d1b67ae37dcb908f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30f635c4c1dc42c8d1b67ae37dcb908f">&#9670;&#160;</a></span>printDeviceCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void printDeviceCount </td>
+          <td>(</td>
+          <td class="paramtype">FILE *</td>          <td class="paramname"><span class="paramname"><em>f</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#af420078b2c324b5d0957818465e33137">ND</a> *</td>          <td class="paramname"><span class="paramname"><em>netDev</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Muestra la contidad de dispositivos conectados en la red. </p>
+<p>Esta funcion muestra en la pantalla la cantiadad total de dispositivos conectados en la red.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">f</td><td>Manipulador del archivo archivo network_structure.dat. </td></tr>
     <tr><td class="paramname">netDev</td><td>Puntero a los registros cargados en la estructura <a class="el" href="structnetwork_devices.html">networkDevices</a>. </td></tr>

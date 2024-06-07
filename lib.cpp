@@ -145,7 +145,7 @@ void printDeviceCount(FILE *f, ND *netDev){
             }
         }
     }
-
+    printf("\n All devices connected on the network.");
     printf("\n CPU:  %d", CPU_count);
     printf("\n CONCENTRATOR:  %d", Concentrator);
     printf("\n TEMP SENSOR:  %d", TempSensor);
@@ -154,5 +154,27 @@ void printDeviceCount(FILE *f, ND *netDev){
     printf("\n FLOW:  %d", FlowSensor);
     printf("\n PRESURE: %d", PresureSensor);
     printf("\n LEVEL:  %d", LevelSensor);
+    printf("\n");
 }
 
+void menu(FILE *f, ND *netDev) {
+    int option;
+    do {
+        printf("\n \t Menu ");
+        printf("\n Enter 1 to view the connection sequence of a specific ID.");
+        printf("\n Enter 2 to view the count of each type of device in the network");
+        printf("\n Enter 0 to exit.");
+        printf("\n Your option: ");
+
+        scanf("%d", &option);
+
+        if (option < 0 || option > 2) {
+            printf("\n\n Please enter a valid option.\n");
+        }
+        if (option == 1) {
+            ID_Connection_Sequence(f, netDev);
+        }else if (option == 2){
+            printDeviceCount(f, netDev);
+        }
+    } while (option != 0);  //el bucle no sale hasta que el usuario escriba el cero en la consola.
+}

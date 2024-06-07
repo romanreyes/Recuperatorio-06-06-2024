@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['type_0',['TYPE',['../struct_sensor.html#ac2caf025ed0f2fa1577a1d62dc079ea0',1,'Sensor::TYPE'],['../struct_actuator.html#a5b1589f4f9b196f6005bc9ad8a1446f0',1,'Actuator::TYPE']]]
+  ['sensor_0',['Sensor',['../struct_sensor.html',1,'']]],
+  ['sensor_1',['SENSOR',['../struct_device___type.html#ad8e13a12f8603667bdaba2e8f7ec8b5b',1,'Device_Type']]]
 ];

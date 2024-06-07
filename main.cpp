@@ -10,13 +10,11 @@ int main(){
     int size_struct = Count_Devices(f);
     ND *netDev= new ND[size_struct];    //netDev = network Devices
     load_network_Devices(f, netDev);
-
-
+    
     for (int i = 0; i < size_struct; i++){     //libero memoria y cierro los archivos
         delete[] netDev[i].LLD_ID;
     }
-    ID_Connection_Sequence(f, netDev);
-    printDeviceCount(f, netDev);
+    menu(f, netDev);
     delete []netDev;
     fclose(f);
 }

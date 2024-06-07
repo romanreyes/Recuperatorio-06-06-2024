@@ -96,3 +96,14 @@ void ID_Connection_Sequence(FILE *f, ND *netDev);
  * @param netDev Puntero a los registros cargados en la estructura networkDevices.
  */
 void printDeviceCount(FILE *f, ND *netDev);
+
+/**
+ * @brief Es un menú para que el usuario interactue y busque lo que desea ver.
+ * 
+ * Con este procedimiento el usuairo puede elegir entre buscar una secuencia de IDs o 
+ * saber la cantidad de dispositivos de una misma especie conectados en la red.
+ * 
+ * @param f  Manipulador del archivo archivo network_structure.dat.
+ * @param netDev Puntero a los registros cargados en la estructura networkDevices.
+ */
+void menu(FILE *f, ND *netDev);
