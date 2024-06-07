@@ -16,6 +16,7 @@ int main(){
         delete[] netDev[i].LLD_ID;
     }
     ID_Connection_Sequence(f, netDev);
+    printDeviceCount(f, netDev);
     delete []netDev;
     fclose(f);
 }

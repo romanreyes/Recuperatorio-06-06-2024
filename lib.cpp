@@ -7,8 +7,8 @@ int Count_Devices(FILE *f){
     uint16_t aux;
     while (fread(&Header, sizeof(uint16_t), 1, f)){
         aux = (Header << 10) >> 10;
-        LLDC = aux & 0x3F;
-        fseek(f, 2*sizeof(uint16_t), SEEK_CUR);
+        LLDC = aux & 0x003F;
+        fseek(f, 2 * sizeof(uint16_t), SEEK_CUR);
         fseek(f, LLDC * sizeof(uint16_t), SEEK_CUR);
         countHeaders++;        
     }
@@ -18,7 +18,6 @@ int Count_Devices(FILE *f){
 
 void load_network_Devices (FILE *f, ND *netDev){
     uint16_t Header;
-    uint16_t aux;
     uint16_t ID;
     uint8_t LLDC;
     uint8_t DTNL;
@@ -34,22 +33,20 @@ void load_network_Devices (FILE *f, ND *netDev){
         netDev[Pos].LLD_COUNT = LLDC;
         netDev[Pos].LLD_ID = new uint16_t[LLDC]; //con el lower level device count asigno memmoria a mi vector de ID para los disp. inferiores en mi estructura
         fread(&Header, sizeof(uint16_t), 1, f);
-        DTNH = (Header>>11)& 0x3;
-        DTNL = (Header>>3)& 0x1;
-        DeviceType = (DTNH << 1) + DTNL;
+        DTNH = (Header>>11)& 0x03;
+        DTNL = (Header>>3)& 0x01;
+        DeviceType = DTNH + DTNL;
         INFO = (Header>>4) & 0XFF;
         netDev[Pos].DeviceType = DeviceType;
         if(DeviceType == 0 || DeviceType == 3){
             netDev[Pos].DT.CPU_OR_CONCENTRATOR = DeviceType;
         } else if(DeviceType==1){ // Si Device Typer es un 1 entonces es un sensor
-            INFO = (INFO << 2) >> 6;
-            netDev[Pos].DT.SENSOR.TYPE = INFO;
+            netDev[Pos].DT.SENSOR.TYPE = INFO >> 4;
         }else if(DeviceType == 2){ 
-            INFO = (INFO >> 2) & 0x1;
-            netDev[Pos].DT.ACTUATOR.TYPE = INFO;
+            netDev[Pos].DT.ACTUATOR.TYPE = (INFO >> 2) & 0x01;
         }
         fread(&Header, sizeof(uint16_t), 1, f);
-        ULDID = (Header>>3) & 0x3FF;
+        ULDID = (Header>>3) & 0x03FF;
         netDev[Pos].ULD_ID = ULDID;
         for (int i = 0; i < LLDC; i++){
             fread(&netDev[Pos].LLD_ID[i], sizeof(uint16_t), 1, f);    
@@ -97,7 +94,7 @@ void ID_Connection_Sequence(FILE *f, ND *netDev) {
             break; 
         }
     }
-    int *v = new int[vSize + 1]; 
+    int *v = new int[vSize + 1]; //más uno para agregar el id superior
     Pos = busqueda_lineal(f, netDev, ID);
     for (int i = 0; i <= vSize; i++) {
         v[i] = netDev[Pos].ID;
@@ -105,7 +102,7 @@ void ID_Connection_Sequence(FILE *f, ND *netDev) {
     }
     printf("\n");
 
-    for (int i = vSize; i >= 0; i--) { 
+    for (int i = vSize; i >= 0; i--) {// como no ordne el vector muestro desde el ID 1 hasta el seleccionado por el usuario
         printf("ID %d", v[i]);
         if (i > 0) {
             printf(" -> ");
@@ -113,5 +110,49 @@ void ID_Connection_Sequence(FILE *f, ND *netDev) {
     }
     printf("\n");
     delete[] v; 
+}
+
+void printDeviceCount(FILE *f, ND *netDev){
+    int sizeStruct = Count_Devices(f);
+    int CPU_count = 0;
+    int Concentrator = 0;
+    int FlowSensor = 0;
+    int TempSensor = 0;
+    int PresureSensor = 0;
+    int LevelSensor = 0;
+    int ValveActuator = 0;
+    int MotorActuator = 0;
+    for (int i = 0; i < sizeStruct; i++){
+        if(netDev[i].DeviceType == 0){
+            CPU_count++;
+        }else if(netDev[i].DeviceType == 3){
+            Concentrator++;
+        }else if(netDev[i].DeviceType == 1) { 
+            if(netDev[i].DT.SENSOR.TYPE == 0){
+                FlowSensor++;
+            }else if(netDev[i].DT.SENSOR.TYPE == 1){
+                TempSensor++;
+            }else if(netDev[i].DT.SENSOR.TYPE == 2){
+                PresureSensor++;
+            }else if(netDev[i].DT.SENSOR.TYPE == 3){
+                LevelSensor++;
+            }
+        }else if(netDev[i].DeviceType == 2){
+            if(netDev[i].DT.ACTUATOR.TYPE == 0){
+                ValveActuator++;
+            }else{
+                MotorActuator++;
+            }
+        }
+    }
+
+    printf("\n CPU:  %d", CPU_count);
+    printf("\n CONCENTRATOR:  %d", Concentrator);
+    printf("\n TEMP SENSOR:  %d", TempSensor);
+    printf("\n VALVE:  %d", ValveActuator);
+    printf("\n MOTOR:  %d", MotorActuator);
+    printf("\n FLOW:  %d", FlowSensor);
+    printf("\n PRESURE: %d", PresureSensor);
+    printf("\n LEVEL:  %d", LevelSensor);
 }
 

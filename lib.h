@@ -86,3 +86,13 @@ uint16_t validate_ID(FILE *f, ND *netDev);
  * @param netDev Puntero a los registros cargados en la estructura networkDevices.
  */
 void ID_Connection_Sequence(FILE *f, ND *netDev);
+
+/**
+ * @brief Muestra la contidad de dispositivos conectados en la red.
+ *
+ * Esta funcion muestra en la pantalla la cantiadad total de dispositivos conectados en la red.
+ *
+ * @param f  Manipulador del archivo archivo network_structure.dat.
+ * @param netDev Puntero a los registros cargados en la estructura networkDevices.
+ */
+void printDeviceCount(FILE *f, ND *netDev);
